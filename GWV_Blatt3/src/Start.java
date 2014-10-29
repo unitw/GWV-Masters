@@ -1,6 +1,7 @@
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,30 +15,40 @@ import java.util.logging.Logger;
  *
  * @author 3dibbern
  */
-public class StartSuche {
+public class Start
+{
 
     public static final int LINE_COUNT = 10;
     public static final int LINE_LENGTH = 20;
 
-     public StartSuche(){
-        ReadStateSpace();
+    public Start()
+    {
+        readStateSpace();
     }
-    
-    public final void ReadStateSpace() {
+
+    /**
+     * Sets up the search environment and initiates the search process.
+     */
+    public final void readStateSpace()
+    {
 
         URL statespace = getClass().getResource("resources/blatt3_environment.txt");
 
         EnvironmentReader reader = null;
-        try {
+        try
+        {
             reader = new EnvironmentReader("blatt3_environment.txt", LINE_COUNT, LINE_LENGTH);
-        } catch (IOException ex) {
-            Logger.getLogger(StartSuche.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex)
+        {
+            Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
         }
         char[][] environment = reader.getEnvironment();
 
-        for (int y = 0; y < 10; ++y) {
+        for (int y = 0; y < 10; ++y)
+        {
             String line = "";
-            for (int x = 0; x < 20; ++x) {
+            for (int x = 0; x < 20; ++x)
+            {
                 line = line + environment[y][x];
             }
             System.out.println(line);
@@ -45,8 +56,8 @@ public class StartSuche {
 
         System.out.println("X: " + reader.getStartPosX() + ", Y: " + reader.getStartPosY());
 
-        Search dfs = new Search(environment, LINE_LENGTH, LINE_COUNT, reader.getStartPosX(), reader.getStartPosY());
-        Stack<Character> goalPath = dfs.startDFS();
+//        Search dfs = new Search(environment, LINE_LENGTH, LINE_COUNT, reader.getStartPosX(), reader.getStartPosY());
+        List<Character> goalPath = Search.dfs(environment, reader.getStartPosX(), reader.getStartPosY());
 
         System.out.println(goalPath.toString());
     }
