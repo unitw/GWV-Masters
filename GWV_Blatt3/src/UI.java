@@ -72,9 +72,5 @@ public class UI extends JFrame {
         frame.getContentPane().add(BSearch, BorderLayout.SOUTH);
         frame.setVisible(true);
 
-    }
-
-
-
-    
+    }    
 }

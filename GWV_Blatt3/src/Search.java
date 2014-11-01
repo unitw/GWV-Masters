@@ -199,7 +199,8 @@ public class Search
     }
 
     // ---- Goal Checking: ----
-    // These Methods check wether a goal is in next to the current postion
+    // These Methods check wether a goal is in next to the current postion,
+    // if 
     private boolean goalInReach()
     {
         if (topIsGoal())
