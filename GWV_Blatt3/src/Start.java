@@ -1,10 +1,9 @@
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+// Chris hat Stack Import gelöscht
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
