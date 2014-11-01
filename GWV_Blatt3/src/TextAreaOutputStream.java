@@ -10,7 +10,7 @@ public class TextAreaOutputStream extends OutputStream {
     
     public TextAreaOutputStream( JTextArea control ) {
         textControl = control;
-         textControl.setFont(new Font("Arial", Font.PLAIN, 24));
+         textControl.setFont(new Font("Arial", Font.BOLD, 20));
 
     }
 
