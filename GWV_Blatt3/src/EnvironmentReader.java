@@ -18,9 +18,11 @@ public class EnvironmentReader
     private final int _lineCount;
     private final int _lineLength;
     private final char START_CHAR = 's';
+    private final char GOAL_CHAR = 'g';
 
     private char[][] _environment;
     private int[] _startPos;
+    private int[] _goalPos;
 
     /**
      * Creates an Environment reader that reads the specified file. The text
@@ -62,6 +64,12 @@ public class EnvironmentReader
                     _startPos[0] = currentLine;
                     _startPos[1] = linePos;
                 }
+                if (currentChar == GOAL_CHAR) {
+                    _goalPos = new int[2];
+                	_goalPos [0] = currentLine;
+                	_goalPos [1] = linePos;
+            	}
+                
                 environment[currentLine][linePos] = currentChar;
             }
         }
@@ -102,6 +110,24 @@ public class EnvironmentReader
      * @return the Y-Coordinate of the start point
      */
     public int getStartPosY()
+    {
+        return _startPos[0];
+    }
+    
+    /**
+     * Returns the goal point of the environment that was read during instanciation
+     * @return the X-Coordinate of the goal point
+     */
+    public int getGoalPosX()
+    {
+        return _startPos[1];
+    }
+
+    /**
+     * Returns the goal point of the environment that was read during instanciation
+     * @return the Y-Coordinate of the goal point
+     */
+    public int getGoalPosY()
     {
         return _startPos[0];
     }

@@ -12,6 +12,7 @@ public class Search
 
     private final char GOAL_CHAR = 'g';
     private final char START_CHAR = 's';
+    private final int GOAL_HASH;
     private final char UP = 'u';
     private final char RIGHT = 'r';
     private final char DOWN = 'd';
@@ -21,6 +22,7 @@ public class Search
     private char[][] _environment;
     private final int _startPosX;
     private final int _startPosY;
+    private final 
 
     private Set<Path> _frontier;
     private Queue<Node> _bfsQueue;
@@ -39,7 +41,7 @@ public class Search
      */
     public static List<Character> dfs(char[][] environment, int startPosX, int startPosY)
     {
-        Search search = new Search(environment, startPosX, startPosY);
+        Search search = new Search(environment, startPosX, startPosY, null);
         return search.startDFS();
     }
 
@@ -54,7 +56,7 @@ public class Search
      * @param startPosY The X-Coordinate of the start point in the environment
      * array. char[y][x]
      */
-    public Search(char[][] environment, int startPosX, int startPosY)
+    public Search(char[][] environment, int startPosX, int startPosY, Node goalNode)
     {
         _environment = Start.copy2DCharArray(environment);
         _inputEnvironment = Start.copy2DCharArray(environment);
@@ -66,7 +68,7 @@ public class Search
         _searchStack = new Stack<Character>();
         _frontier = new HashSet<Path>();
         _bfsQueue = new PriorityQueue<Node>();
-        
+        GOAL_HASH = goalNode.hashCode();
     }
 
     /**
@@ -172,7 +174,21 @@ public class Search
         while (!_frontier.isEmpty())
         {
             Node currentNode = _bfsQueue.poll();
+            Path currentPath = null;
+            // Choosing the path that ends with the first element on the queue
+            for (Path path:_frontier)
+            {
+                if (currentNode.equals(path.getLastNode()))
+                {
+                    currentPath = path;
+                    break;
+                }
+            }
             
+            if (isGoalNode(currentNode))
+            {
+                return currentPath.getCharPath();
+            }
         }
         return new ArrayList<Character>();
     }
@@ -267,6 +283,11 @@ public class Search
     private boolean rightIsGoal()
     {
         return _environment[_currentPosY][_currentPosX + 1] == GOAL_CHAR;
+    }
+    
+    private boolean isGoalNode(Node currentNode)
+    {
+        return currentNode.hashCode() == GOAL_HASH;
     }
     
     private void reset()

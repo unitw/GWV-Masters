@@ -24,4 +24,34 @@ public class Node {
     public char getDirection() {
         return Direction;
     }
+    
+    @Override
+	public int hashCode() {
+    	int hash = 5;
+    	hash = 59 * hash + this.x;
+    	hash = 59 * hash + this.y;
+    	hash = 59 * hash + this.Direction;
+    	return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+    	if (obj == null) {
+        	return false;
+    	}
+    	if (getClass() != obj.getClass()) {
+        	return false;
+    	}
+    	final Node other = (Node) obj;
+    	if (this.x != other.x) {
+        	return false;
+    	}
+    	if (this.y != other.y) {
+        	return false;
+    	}
+    	if (this.Direction != other.Direction) {
+        	return false;
+    	}
+    	return true;
+	}
 }
