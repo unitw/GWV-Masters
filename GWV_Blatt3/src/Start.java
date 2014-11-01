@@ -43,7 +43,11 @@ public class Start {
             for (int x = 0; x < 20; ++x) {
                 line = line + environment[y][x];
             }
-           Thread.sleep(1000);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println(line);
         }
 
