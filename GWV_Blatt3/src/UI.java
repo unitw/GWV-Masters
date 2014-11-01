@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.PrintStream;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,8 +30,12 @@ public class UI extends JFrame {
         start = new Start();
 
         JButton BSearch = new JButton("Search");
-        BSearch.addActionListener((ActionEvent e) -> {
-            start.readStateSpace();
+        BSearch.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                start.readStateSpace();
+            }
         });
         BSearch.setSize(new Dimension(100, 25));
 
