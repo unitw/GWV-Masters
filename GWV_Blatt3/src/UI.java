@@ -20,47 +20,45 @@ import javax.swing.JTextArea;
  */
 public class UI extends JFrame {
 
-    public JFrame fsearch = null;
-    JPanel pconsole = new JPanel();
-    JTextArea tconsole = new JTextArea();
+    public JFrame frame = null;
+    JPanel panel = new JPanel();
+    JTextArea textarea = new JTextArea();
     Start start = null;
 
     public void initCmps() {
         start = new Start();
 
-        JButton BSearch= new JButton("Search");
+        JButton BSearch = new JButton("Search");
         BSearch.addActionListener((ActionEvent e) -> {
             start.readStateSpace();
         });
-        BSearch.setSize(new Dimension(100,25));
-        
-      
-        fsearch = new JFrame("Search UI");
-        fsearch.setLayout(new BorderLayout());
-        fsearch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fsearch.setSize(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
-        fsearch.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        fsearch.setMinimumSize(new Dimension(500, 500));
-        
-        
-        tconsole.setEditable(false);
-        pconsole.add(new JScrollPane(tconsole));
-        
+        BSearch.setSize(new Dimension(100, 25));
 
-        tconsole.setSize(new Dimension(500, 500));
-        
-        
-        PrintStream out = new PrintStream(new TextAreaOutputStream(tconsole));
+        frame = new JFrame("Search UI");
+        frame.setLayout(new BorderLayout());
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setMinimumSize(new Dimension(500, 500));
+
+        PrintStream out = new PrintStream(new TextAreaOutputStream(textarea));
         System.setOut(out);
         System.setErr(out);
-      
-        
-       
-        
-        
-        fsearch.getContentPane().add(pconsole,BorderLayout.NORTH);
-        fsearch.getContentPane().add(BSearch,BorderLayout.SOUTH);
-        fsearch.setVisible(true);
+
+        textarea.setEditable(false);
+
+        JScrollPane scroller = new JScrollPane(textarea);
+        this.getContentPane().add(scroller, BorderLayout.CENTER);
+
+        scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scroller.setPreferredSize(new Dimension(frame.getWidth() - 10, 700));
+
+        panel.add(scroller);
+        panel.setPreferredSize(new Dimension(frame.getWidth() - 10, 700));
+        frame.getContentPane().add(panel, BorderLayout.NORTH);
+        frame.getContentPane().add(BSearch, BorderLayout.SOUTH);
+        frame.setVisible(true);
 
     }
 
