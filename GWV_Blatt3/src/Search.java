@@ -1,6 +1,10 @@
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
 import java.util.Stack;
 
 public class Search
@@ -18,6 +22,9 @@ public class Search
     private final int _startPosX;
     private final int _startPosY;
 
+    private Set _frontier;
+    private Queue _bfsQueue;
+    
     private int _currentPosX;
     private int _currentPosY;
 
@@ -55,7 +62,11 @@ public class Search
         _startPosY = startPosY;
         _currentPosX = startPosX;
         _currentPosY = startPosY;
+        
         _searchStack = new Stack<Character>();
+        _frontier = new HashSet<Path>();
+        _bfsQueue = new PriorityQueue<Node>();
+        
     }
 
     /**
@@ -151,6 +162,12 @@ public class Search
         return new ArrayList(_searchStack);
     }
 
+    public List<Character> startBFS()
+    {
+        Node startNode = new Node(_startPosX, _startPosY, START_CHAR);
+        
+    }
+    
     /**
      * Changes the values of currentPosX or currentPosY to move 
      * in the specified diretion
