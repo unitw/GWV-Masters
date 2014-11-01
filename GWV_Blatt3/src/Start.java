@@ -68,10 +68,12 @@ public class Start {
         }
 
         System.out.println("X: " + reader.getStartPosX() + ", Y: " + reader.getStartPosY());
+        
+        Node goalNode = new Node(reader.getGoalPosX(), reader.getGoalPosY(), reader.getGoalChar());
 
 //        Search dfs = new Search(environment, LINE_LENGTH, LINE_COUNT, reader.getStartPosX(), reader.getStartPosY());
 //        List<Character> goalPath = Search.dfs(environment, reader.getStartPosX(), reader.getStartPosY());
-        Search search = new Search(environment, reader.getStartPosX(), reader.getStartPosY());
+        Search search = new Search(environment, reader.getStartPosX(), reader.getStartPosY(), goalNode);
         List<Character> goalPath = search.startDFS();
 
         System.out.println(goalPath.toString());

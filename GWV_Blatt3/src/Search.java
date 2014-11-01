@@ -12,7 +12,6 @@ public class Search
 
     private final char GOAL_CHAR = 'g';
     private final char START_CHAR = 's';
-    private final int GOAL_HASH;
     private final char UP = 'u';
     private final char RIGHT = 'r';
     private final char DOWN = 'd';
@@ -22,7 +21,7 @@ public class Search
     private char[][] _environment;
     private final int _startPosX;
     private final int _startPosY;
-    private final 
+    private final int GOAL_HASH;
 
     private Set<Path> _frontier;
     private Queue<Node> _bfsQueue;
@@ -189,6 +188,52 @@ public class Search
             {
                 return currentPath.getCharPath();
             }
+            
+            _frontier.remove(currentPath);
+            moveTo(currentNode);
+            
+            // Check wether currentNode has any neighbours
+            Node neighbour1 = null;
+            Node neighbour2 = null;
+            Node neighbour3 = null;
+            Node neighbour4 = null;
+            if (topIsClearOrGoal())
+            {
+                move(UP);
+                _environment[_currentPosY][_currentPosX] = UP;
+                
+                neighbour1 = new Node(_currentPosX, _currentPosY, UP);
+                
+                move(oppositeDirection(UP));
+            }
+            if (rightIsClearOrGoal())
+            {
+                move(RIGHT);
+                _environment[_currentPosY][_currentPosX] = RIGHT;
+                
+                neighbour2 = new Node(_currentPosX, _currentPosY, RIGHT);
+                
+                move(oppositeDirection(RIGHT));
+            }
+            if (bottomIsClearOrGoal())
+            {
+                move(DOWN);
+                _environment[_currentPosY][_currentPosX] = DOWN;
+                
+                neighbour3 = new Node(_currentPosX, _currentPosY, DOWN);
+                
+                move(oppositeDirection(DOWN));
+            }
+            if (leftIsClearOrGoal())
+            {
+                move(LEFT);
+                _environment[_currentPosY][_currentPosX] = LEFT;
+                
+                neighbour4 = new Node(_currentPosX, _currentPosY, LEFT);
+                
+                move(oppositeDirection(LEFT));
+            }
+            
         }
         return new ArrayList<Character>();
     }
@@ -215,6 +260,33 @@ public class Search
                 _currentPosX -= 1;
                 break;
         }
+    }
+    
+    private void moveTo(Node position)
+    {
+        _currentPosX = position.getX();
+        _currentPosY = position.getY();
+    }
+    
+    
+    private boolean topIsClearOrGoal()
+    {
+        return topIsClear() || _environment[_currentPosY - 1][_currentPosX] == GOAL_CHAR;
+    }
+
+    private boolean bottomIsClearOrGoal()
+    {
+        return bottomIsClear() || _environment[_currentPosY + 1][_currentPosX] == GOAL_CHAR;
+    }
+
+    private boolean leftIsClearOrGoal()
+    {
+        return leftIsClear() || _environment[_currentPosY][_currentPosX - 1] == GOAL_CHAR;
+    }
+
+    private boolean rightIsClearOrGoal()
+    {
+        return rightIsClear() || _environment[_currentPosY][_currentPosX + 1] == GOAL_CHAR;
     }
     
     // ----Clear-Methods: ----

@@ -131,4 +131,9 @@ public class EnvironmentReader
     {
         return _startPos[0];
     }
+    
+    public char getGoalChar()
+    {
+        return GOAL_CHAR;
+    }
 }
