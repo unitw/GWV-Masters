@@ -30,7 +30,23 @@ public class UI extends JFrame {
     public void initCmps() {
         start = new Start();
 
-        JButton BSearch = new JButton("Search");
+        JButton BDeepSearch = new JButton("Deep-Search");
+        BDeepSearch.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        start.readStateSpace();
+                    }
+                });
+            }
+        });
+        BDeepSearch.setSize(new Dimension(100, 25));
+
+        JButton BSearch = new JButton("Deep-Search");
         BSearch.addActionListener(new ActionListener() {
 
             @Override
@@ -45,7 +61,7 @@ public class UI extends JFrame {
             }
         });
         BSearch.setSize(new Dimension(100, 25));
-
+        
         frame = new JFrame("Search UI");
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
