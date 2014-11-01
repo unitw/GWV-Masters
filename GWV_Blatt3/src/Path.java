@@ -10,52 +10,43 @@ public class Path {
     public Path(Node s) {
         nodelist.add(s);
     }
-    
-    public Path()
-    {
-        
-    }
-    
-    public void addNode(Node node){
-    	nodelist.add(node);
-	}
 
-    
-    public Node getLastNode()
-    {
+    public Path() {
+
+    }
+
+    public void addNode(Node node) {
+        nodelist.add(node);
+    }
+
+    public Node getLastNode() {
         int lastIndex = nodelist.size() - 1;
-        if (lastIndex > 0)
-        {
+        if (lastIndex > 0) {
             return nodelist.get(lastIndex);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
-    
-    public List<Character> getCharPath()
-    {
+
+    public List<Character> getCharPath() {
         List<Character> charList = new ArrayList<Character>();
-        for (Node node:nodelist)
-        {
+        for (Node node : nodelist) {
             charList.add(node.getDirection());
         }
-        
+
         return charList;
     }
-    
+
     public Path expandPath(Node newNode) {
-    	Path newPath = null;
-        try
-        {
-            newPath = (Path) this.clone();
-        }
-        catch (CloneNotSupportedException ex)
-        {
+
+        try {
+            Path newPath = (Path) this.clone();
+            
+            newPath.addNode(newNode);
+            return newPath;
+        } catch (CloneNotSupportedException ex) {
             Logger.getLogger(Path.class.getName()).log(Level.SEVERE, null, ex);
         }
-    	newPath.addNode(newNode);
-    	return newPath;
-	}
+        return null;
+    }
 }

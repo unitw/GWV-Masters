@@ -77,9 +77,9 @@ public class UI extends JFrame {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setMinimumSize(new Dimension(500, 500));
 
-        PrintStream out = new PrintStream(new TextAreaOutputStream(textarea));
-        System.setOut(out);
-        System.setErr(out);
+//        PrintStream out = new PrintStream(new TextAreaOutputStream(textarea));
+//        System.setOut(out);
+//        System.setErr(out);
 
         textarea.setEditable(false);
 
