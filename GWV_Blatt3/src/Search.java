@@ -165,7 +165,7 @@ public class Search
     public List<Character> startBFS()
     {
         Node startNode = new Node(_startPosX, _startPosY, START_CHAR);
-        
+        return new ArrayList<Character>();
     }
     
     /**
