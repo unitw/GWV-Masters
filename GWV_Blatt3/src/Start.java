@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * @author 3dibbern
  */
 public class Start {
-
+//neueste sachen der sachen
     public static final int LINE_COUNT = 10;
     public static final int LINE_LENGTH = 20;
 
