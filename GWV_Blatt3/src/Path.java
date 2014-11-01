@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Path {
 
@@ -13,6 +15,11 @@ public class Path {
     {
         
     }
+    
+    public void addNode(Node node){
+    	nodelist.add(node);
+	}
+
     
     public Node getLastNode()
     {
@@ -38,5 +45,17 @@ public class Path {
         return charList;
     }
     
-    
+    public Path expandPath(Node newNode) {
+    	Path newPath = null;
+        try
+        {
+            newPath = (Path) this.clone();
+        }
+        catch (CloneNotSupportedException ex)
+        {
+            Logger.getLogger(Path.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    	newPath.addNode(newNode);
+    	return newPath;
+	}
 }

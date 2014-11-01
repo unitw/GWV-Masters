@@ -43,7 +43,7 @@ public class UI extends JFrame {
 
                     @Override
                     public void run() {
-                        start.DeepFirstSearch();
+                        start.DepthFirstSearch();
                     }
                 });
             }

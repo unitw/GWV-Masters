@@ -193,16 +193,15 @@ public class Search
             moveTo(currentNode);
             
             // Check wether currentNode has any neighbours
-            Node neighbour1 = null;
-            Node neighbour2 = null;
-            Node neighbour3 = null;
-            Node neighbour4 = null;
+            // If a neighbour is found a new Path is added to frontier
             if (topIsClearOrGoal())
             {
                 move(UP);
                 _environment[_currentPosY][_currentPosX] = UP;
                 
-                neighbour1 = new Node(_currentPosX, _currentPosY, UP);
+                Node neighbour = new Node(_currentPosX, _currentPosY, UP);
+                Path newPath = currentPath.expandPath(neighbour);
+                _frontier.add(newPath);
                 
                 move(oppositeDirection(UP));
             }
@@ -211,7 +210,9 @@ public class Search
                 move(RIGHT);
                 _environment[_currentPosY][_currentPosX] = RIGHT;
                 
-                neighbour2 = new Node(_currentPosX, _currentPosY, RIGHT);
+                Node neighbour = new Node(_currentPosX, _currentPosY, RIGHT);
+                Path newPath = currentPath.expandPath(neighbour);
+                _frontier.add(newPath);
                 
                 move(oppositeDirection(RIGHT));
             }
@@ -220,7 +221,9 @@ public class Search
                 move(DOWN);
                 _environment[_currentPosY][_currentPosX] = DOWN;
                 
-                neighbour3 = new Node(_currentPosX, _currentPosY, DOWN);
+                Node neighbour = new Node(_currentPosX, _currentPosY, DOWN);
+                Path newPath = currentPath.expandPath(neighbour);
+                _frontier.add(newPath);
                 
                 move(oppositeDirection(DOWN));
             }
@@ -229,7 +232,9 @@ public class Search
                 move(LEFT);
                 _environment[_currentPosY][_currentPosX] = LEFT;
                 
-                neighbour4 = new Node(_currentPosX, _currentPosY, LEFT);
+                Node neighbour = new Node(_currentPosX, _currentPosY, LEFT);
+                Path newPath = currentPath.expandPath(neighbour);
+                _frontier.add(newPath);
                 
                 move(oppositeDirection(LEFT));
             }

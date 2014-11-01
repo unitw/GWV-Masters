@@ -43,10 +43,39 @@ public class Start {
      * Sets up the search environment and initiates the search process.
      */
     public final void BreadthFirstSearch() {
+        URL statespace = getClass().getResource("resources/blatt3_environment.txt");
 
+        EnvironmentReader reader = null;
+        try {
+            reader = new EnvironmentReader("blatt3_environment.txt", LINE_COUNT, LINE_LENGTH);
+        } catch (IOException ex) {
+            Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        char[][] environment = reader.getEnvironment();
+
+        for (int y = 0; y < 10; ++y) {
+            String line = "";
+            for (int x = 0; x < 20; ++x) {
+                line = line + environment[y][x];
+            }
+
+            System.out.println(line);
+        }
+
+        System.out.println("X: " + reader.getStartPosX() + ", Y: " + reader.getStartPosY());
+        
+        Node goalNode = new Node(reader.getGoalPosX(), reader.getGoalPosY(), reader.getGoalChar());
+
+//        Search dfs = new Search(environment, LINE_LENGTH, LINE_COUNT, reader.getStartPosX(), reader.getStartPosY());
+//        List<Character> goalPath = Search.dfs(environment, reader.getStartPosX(), reader.getStartPosY());
+        Search search = new Search(environment, reader.getStartPosX(), reader.getStartPosY(), goalNode);
+        
+        List<Character> goalPath = search.startBFS();
+
+        System.out.println(goalPath.toString());
     }
 
-    public final void DeepFirstSearch() {
+    public final void DepthFirstSearch() {
 
         URL statespace = getClass().getResource("resources/blatt3_environment.txt");
 
