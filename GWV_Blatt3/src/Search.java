@@ -13,9 +13,10 @@ public class Search
     private final char DOWN = 'd';
     private final char LEFT = 'l';
 
+    private final char[][] _inputEnvironment;
     private char[][] _environment;
-    private int _startPosX;
-    private int _startPosY;
+    private final int _startPosX;
+    private final int _startPosY;
 
     private int _currentPosX;
     private int _currentPosY;
@@ -48,7 +49,8 @@ public class Search
      */
     public Search(char[][] environment, int startPosX, int startPosY)
     {
-        _environment = environment;
+        _environment = Start.copy2DCharArray(environment);
+        _inputEnvironment = Start.copy2DCharArray(environment);
         _startPosX = startPosX;
         _startPosY = startPosY;
         _currentPosX = startPosX;
@@ -95,11 +97,13 @@ public class Search
      */
     public List<Character> startDFS()
     {
+        reset(); // Resets all values to the start values, needed if multiple searches are performed
+        
         _searchStack.push(START_CHAR);
 
         int schleifenzaehler = 0;
 
-        while (!goalInReach())
+        while (!goalInReach() && !_searchStack.isEmpty())
         {
             if (topIsClear())
             {
@@ -123,15 +127,12 @@ public class Search
                 _searchStack.push(LEFT);
             } else
             {
-                char topChar = _searchStack.peek();
-                if (topChar != START_CHAR)
-                {
-                    _searchStack.pop();
-                }
+                //char topChar = _searchStack.peek();
+                char topChar = _searchStack.pop();
                 move(oppositeDirection(topChar));
             }
             ++schleifenzaehler;
-			//System.out.println(_searchStack.toString());
+            //System.out.println(_searchStack.toString());
 
             for (int y = 0; y < 10; ++y)
             {
@@ -146,6 +147,7 @@ public class Search
         }
 
         System.out.println(schleifenzaehler);
+        
         return new ArrayList(_searchStack);
     }
 
@@ -239,4 +241,14 @@ public class Search
     {
         return _environment[_currentPosY][_currentPosX + 1] == GOAL_CHAR;
     }
+    
+    private void reset()
+    {
+        _environment = Start.copy2DCharArray(_inputEnvironment);
+        _searchStack.removeAllElements();
+        _currentPosX = _startPosX;
+        _currentPosY = _startPosY;
+    }
 }
+
+
