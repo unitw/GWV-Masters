@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -34,7 +35,13 @@ public class UI extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                start.readStateSpace();
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        start.readStateSpace();
+                    }
+                });
             }
         });
         BSearch.setSize(new Dimension(100, 25));
@@ -53,7 +60,7 @@ public class UI extends JFrame {
         textarea.setEditable(false);
 
         JScrollPane scroller = new JScrollPane(textarea);
-        this.getContentPane().add(scroller, BorderLayout.CENTER);
+        frame.getContentPane().add(scroller, BorderLayout.CENTER);
 
         scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -67,4 +74,7 @@ public class UI extends JFrame {
 
     }
 
+
+
+    
 }
