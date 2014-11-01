@@ -55,7 +55,7 @@ public class Start {
 
         EnvironmentReader reader = null;
         try {
-            reader = new EnvironmentReader(url, LINE_COUNT, LINE_LENGTH);
+            reader = new EnvironmentReader("blatt3_environment.txt", LINE_COUNT, LINE_LENGTH);
         } catch (IOException ex) {
             Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
         }
