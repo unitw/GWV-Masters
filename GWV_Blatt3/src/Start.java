@@ -26,7 +26,7 @@ public class Start {
     /**
      * Sets up the search environment and initiates the search process.
      */
-    public final String readStateSpace() {
+    public final void readStateSpace() {
 
         URL statespace = getClass().getResource("resources/blatt3_environment.txt");
 
@@ -43,6 +43,11 @@ public class Start {
             for (int x = 0; x < 20; ++x) {
                 line = line + environment[y][x];
             }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println(line);
         }
 
@@ -53,8 +58,7 @@ public class Start {
 
         System.out.println(goalPath.toString());
        
-        
-        return "StateSpace";
+       
     }
 
 }
