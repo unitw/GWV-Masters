@@ -22,8 +22,8 @@ public class Search
     private final int _startPosX;
     private final int _startPosY;
 
-    private Set _frontier;
-    private Queue _bfsQueue;
+    private Set<Path> _frontier;
+    private Queue<Node> _bfsQueue;
     
     private int _currentPosX;
     private int _currentPosY;
@@ -165,6 +165,15 @@ public class Search
     public List<Character> startBFS()
     {
         Node startNode = new Node(_startPosX, _startPosY, START_CHAR);
+        
+        _bfsQueue.add(startNode);
+        _frontier.add(new Path(startNode));
+        
+        while (!_frontier.isEmpty())
+        {
+            Node currentNode = _bfsQueue.poll();
+            
+        }
         return new ArrayList<Character>();
     }
     
