@@ -70,7 +70,7 @@ public class RedirectText {
                 buffer.delete(0, buffer.length());
               
             }
-            old.print(c);
+            old.print(value);
         }
     }
 }
