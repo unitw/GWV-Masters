@@ -45,8 +45,11 @@ public class Start {
     private void initSearch()
     {
         EnvironmentReader reader = null;
+        URL urlreader= getClass().getResource("/resources/blatt3_environment.txt");
+         String pfad =urlreader.toString().substring(6);
+        
         try {
-            reader = new EnvironmentReader("blatt3_environment.txt", LINE_COUNT, LINE_LENGTH);
+            reader = new EnvironmentReader("C:/blatt3_environment.txt", LINE_COUNT, LINE_LENGTH);
         } catch (IOException ex) {
             Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
         }
