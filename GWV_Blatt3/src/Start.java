@@ -18,8 +18,10 @@ import java.util.logging.Logger;
  */
 public class Start {
 //neueste sachen der sachen
+
     public static final int LINE_COUNT = 10;
     public static final int LINE_LENGTH = 20;
+    public UI ui = null;
 
     public static char[][] copy2DCharArray(char[][] original) {
         int sizeY = original.length;
@@ -35,15 +37,15 @@ public class Start {
 
     }
 
-    public Start() {
-        // DeepFirstSearch();
-        //BreadthFirstSearch();
+    public Start(UI ui) {
+        this.ui = ui;
+
     }
 
     /**
      * Sets up the search environment and initiates the search process.
      */
-    public final void BreadthFirstSearch() {
+    public final void BreadthFirstSearch(int fastmode) {
         URL statespace = getClass().getResource("resources/blatt3_environment.txt");
 
         EnvironmentReader reader = null;
@@ -59,12 +61,12 @@ public class Start {
             for (int x = 0; x < 20; ++x) {
                 line = line + environment[y][x];
             }
-
+            
             System.out.println(line);
         }
 
         System.out.println("X: " + reader.getStartPosX() + ", Y: " + reader.getStartPosY());
-        
+
         Node goalNode = new Node(reader.getGoalPosX(), reader.getGoalPosY(), reader.getGoalChar());
 
 //        Search dfs = new Search(environment, LINE_LENGTH, LINE_COUNT, reader.getStartPosX(), reader.getStartPosY());
@@ -74,6 +76,7 @@ public class Start {
         List<Character> goalPath = search.startBFS();
 
         System.out.println(goalPath.toString());
+        ui.Schritte.setText("Auszufuehrende Schritte" + goalPath.toString());
     }
 
     public final void DepthFirstSearch() {
@@ -93,12 +96,12 @@ public class Start {
             for (int x = 0; x < 20; ++x) {
                 line = line + environment[y][x];
             }
-
+           
             System.out.println(line);
         }
 
         System.out.println("X: " + reader.getStartPosX() + ", Y: " + reader.getStartPosY());
-        
+
         Node goalNode = new Node(reader.getGoalPosX(), reader.getGoalPosY(), reader.getGoalChar());
 
 //        Search dfs = new Search(environment, LINE_LENGTH, LINE_COUNT, reader.getStartPosX(), reader.getStartPosY());
@@ -107,11 +110,8 @@ public class Start {
         List<Character> goalPath = search.startDFS();
 
         System.out.println(goalPath.toString());
+        ui.Schritte.setText("Auszufuehrende Schritte" + goalPath.toString());
 
     }
 
-    
-
-    
-    
 }

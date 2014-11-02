@@ -234,6 +234,7 @@ public class Search {
                 move(oppositeDirection(LEFT));
             }
             printEnvironment();
+            
             ++schleifenZaehler;
 
         }
@@ -243,6 +244,10 @@ public class Search {
         return new ArrayList<Character>();
     }
 
+    
+    
+    
+    
     /**
      * Changes the values of currentPosX or currentPosY to move in the specified
      * diretion

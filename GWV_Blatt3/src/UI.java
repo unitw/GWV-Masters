@@ -2,16 +2,19 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.ScrollPane;
+import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.PrintStream;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -27,14 +30,26 @@ public class UI extends JFrame {
     public JFrame frame = null;
     JPanel panel = new JPanel();
     JPanel buttonpanel = new JPanel();
-    JTextArea textarea = new JTextArea();
+    TextArea textarea = new TextArea();
     Start start = null;
+    JButton BBreadthSearch;
+    JButton BDeepSearch;
+    JButton BpreviousSearch;
+    JButton BnextSearch;
+    public JTextField Schritte = new JTextField();
+
+    public UI() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+        }
+    }
 
     public void initCmps() {
-        start = new Start();
+        start = new Start(this);
         buttonpanel.setLayout(new BorderLayout());
 
-        JButton BDeepSearch = new JButton("Deep-Search");
+        BDeepSearch = new JButton("Deep-Search");
         BDeepSearch.addActionListener(new ActionListener() {
 
             @Override
@@ -50,7 +65,7 @@ public class UI extends JFrame {
         });
         BDeepSearch.setSize(new Dimension(100, 25));
 
-        JButton BBreadthSearch = new JButton("Breadth-First-Search");
+        BBreadthSearch = new JButton("Breadth-First-Search");
         BBreadthSearch.addActionListener(new ActionListener() {
 
             @Override
@@ -59,12 +74,44 @@ public class UI extends JFrame {
 
                     @Override
                     public void run() {
-                        start.BreadthFirstSearch();
+                        start.BreadthFirstSearch(0);
                     }
                 });
             }
         });
         BBreadthSearch.setSize(new Dimension(100, 25));
+
+        BpreviousSearch = new JButton("<-");
+        BpreviousSearch.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        start.DepthFirstSearch();
+                    }
+                });
+            }
+        });
+        BpreviousSearch.setSize(new Dimension(50, 25));
+
+        BnextSearch = new JButton("->");
+        BnextSearch.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        start.DepthFirstSearch();
+                    }
+                });
+            }
+        });
+        BnextSearch.setSize(new Dimension(50, 25));
 
         frame = new JFrame("Search UI");
         frame.setLayout(new BorderLayout());
@@ -77,28 +124,46 @@ public class UI extends JFrame {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setMinimumSize(new Dimension(500, 500));
 
-        PrintStream out = new PrintStream(new TextAreaOutputStream(textarea));
-        System.setOut(out);
-        System.setErr(out);
+        new RedirectText(textarea);
+//        System.setOut(new PrintStreamCapturer(textarea, System.out));
+//        System.setErr(new PrintStreamCapturer(textarea, System.err, "[ERROR] "));
+//        textarea.setEditable(false);
+        ScrollPane scroller = new ScrollPane();
+        scroller.add(textarea);
+        scroller.setSize(new Dimension(frame.getWidth() - 5, frame.getHeight() - 250));
+        frame.getContentPane().add(scroller, BorderLayout.PAGE_START);
 
-        textarea.setEditable(false);
-
-        JScrollPane scroller = new JScrollPane(textarea);
-        frame.getContentPane().add(scroller, BorderLayout.CENTER);
-
-        scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scroller.setPreferredSize(new Dimension(frame.getWidth() - 10, 700));
-
-        panel.add(scroller);
-
-        gbc.gridx = 0;
+//        panel.add(scroller);
+        gbc.insets = new Insets(10,10,20,10);
+        gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipadx = 200;
-        buttonpanel.add(BBreadthSearch, gbc);
+        gbc.gridwidth = 2;
+        gbc.ipadx = 500;
+        buttonpanel.add(Schritte, gbc);
+
+//        gbc.gridx = 2;
+//        gbc.gridy = 1;
+//        gbc.fill = GridBagConstraints.NONE;
+//        gbc.anchor = GridBagConstraints.WEST;
+//        gbc.ipadx = 100;
+//        buttonpanel.add(BpreviousSearch, gbc);
+//
+//        gbc.gridx = 1;
+//        gbc.gridy = 1;
+//        gbc.fill = GridBagConstraints.NONE;
+//        gbc.anchor = GridBagConstraints.EAST;
+//        gbc.ipadx = 100;
+//        buttonpanel.add(BnextSearch, gbc);
+        gbc.gridwidth = 1;
         gbc.gridx = 1;
-        gbc.gridy = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.ipadx = 200;
+        buttonpanel.add(BBreadthSearch, gbc);
+        gbc.gridx = 2;
+        gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipadx = 200;
         buttonpanel.add(BDeepSearch, gbc);
