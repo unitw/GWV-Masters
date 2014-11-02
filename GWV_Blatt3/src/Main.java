@@ -9,7 +9,7 @@ public class Main {
         ui= new UI();
         start= new Start(ui);
         start.BreadthFirstSearch(1);
-  start.DepthFirstSearch();
+        start.DepthFirstSearch();
       
     }
 

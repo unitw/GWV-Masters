@@ -129,12 +129,10 @@ public class Search {
                 _environment[_currentPosY][_currentPosX] = LEFT;
                 _searchStack.push(LEFT);
             } else {
-                //char topChar = _searchStack.peek();
                 char topChar = _searchStack.pop();
                 move(oppositeDirection(topChar));
             }
             ++schleifenzaehler;
-            //System.out.println(_searchStack.toString());
 
             for (int y = 0; y < 10; ++y) {
                 String line = "";

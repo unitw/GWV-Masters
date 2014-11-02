@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-// Chris hat Stack Import gelöscht
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,7 +16,6 @@ import java.util.logging.Logger;
  * @author 3dibbern
  */
 public class Start {
-//neueste sachen der sachen
 
     public static final int LINE_COUNT = 10;
     public static final int LINE_LENGTH = 20;
@@ -69,8 +67,6 @@ public class Start {
 
         Node goalNode = new Node(reader.getGoalPosX(), reader.getGoalPosY(), reader.getGoalChar());
 
-//        Search dfs = new Search(environment, LINE_LENGTH, LINE_COUNT, reader.getStartPosX(), reader.getStartPosY());
-//        List<Character> goalPath = Search.dfs(environment, reader.getStartPosX(), reader.getStartPosY());
         Search search = new Search(environment, reader.getStartPosX(), reader.getStartPosY(), goalNode);
         
         List<Character> goalPath = search.startBFS();
@@ -104,8 +100,6 @@ public class Start {
 
         Node goalNode = new Node(reader.getGoalPosX(), reader.getGoalPosY(), reader.getGoalChar());
 
-//        Search dfs = new Search(environment, LINE_LENGTH, LINE_COUNT, reader.getStartPosX(), reader.getStartPosY());
-//        List<Character> goalPath = Search.dfs(environment, reader.getStartPosX(), reader.getStartPosY());
         Search search = new Search(environment, reader.getStartPosX(), reader.getStartPosY(), goalNode);
         List<Character> goalPath = search.startDFS();
 
