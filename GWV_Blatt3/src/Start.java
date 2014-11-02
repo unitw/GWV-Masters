@@ -20,6 +20,8 @@ public class Start {
     public static final int LINE_COUNT = 10;
     public static final int LINE_LENGTH = 20;
     public UI ui = null;
+    
+    private Search _search;
 
     public static char[][] copy2DCharArray(char[][] original) {
         int sizeY = original.length;
@@ -37,15 +39,11 @@ public class Start {
 
     public Start(UI ui) {
         this.ui = ui;
-
+        initSearch();
     }
 
-    /**
-     * Sets up the search environment and initiates the search process.
-     */
-    public final void BreadthFirstSearch(int fastmode) {
-        URL statespace = getClass().getResource("resources/blatt3_environment.txt");
-
+    private void initSearch()
+    {
         EnvironmentReader reader = null;
         try {
             reader = new EnvironmentReader("blatt3_environment.txt", LINE_COUNT, LINE_LENGTH);
@@ -63,45 +61,33 @@ public class Start {
             System.out.println(line);
         }
 
-        System.out.println("X: " + reader.getStartPosX() + ", Y: " + reader.getStartPosY());
-
-        Node goalNode = new Node(reader.getGoalPosX(), reader.getGoalPosY(), reader.getGoalChar());
-
-        Search search = new Search(environment, reader.getStartPosX(), reader.getStartPosY(), goalNode);
+        int startPosX = reader.getStartPosX();
+        int startPosY = reader.getStartPosY();
+        int goalPosX = reader.getGoalPosX();
+        int goalPosY = reader.getGoalPosY();
+        char goalChar = reader.getGoalChar();
         
-        List<Character> goalPath = search.startBFS();
+        System.out.println("X: " + startPosX + ", Y: " + startPosY);
+        
+        Node goalNode = new Node(goalPosX, goalPosY, goalChar);
+
+        _search = new Search(environment, startPosX, startPosY, goalNode);
+    }
+    
+    /**
+     * Sets up the search environment and initiates the search process.
+     */
+    public final void BreadthFirstSearch(int fastmode) 
+    {
+        List<Character> goalPath = _search.startBFS();
 
         System.out.println(goalPath.toString());
         ui.Schritte.setText("Auszufuehrende Schritte" + goalPath.toString());
     }
 
-    public final void DepthFirstSearch() {
-
-        URL statespace = getClass().getResource("resources/blatt3_environment.txt");
-
-        EnvironmentReader reader = null;
-        try {
-            reader = new EnvironmentReader("blatt3_environment.txt", LINE_COUNT, LINE_LENGTH);
-        } catch (IOException ex) {
-            Logger.getLogger(Start.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        char[][] environment = reader.getEnvironment();
-
-        for (int y = 0; y < 10; ++y) {
-            String line = "";
-            for (int x = 0; x < 20; ++x) {
-                line = line + environment[y][x];
-            }
-           
-            System.out.println(line);
-        }
-
-        System.out.println("X: " + reader.getStartPosX() + ", Y: " + reader.getStartPosY());
-
-        Node goalNode = new Node(reader.getGoalPosX(), reader.getGoalPosY(), reader.getGoalChar());
-
-        Search search = new Search(environment, reader.getStartPosX(), reader.getStartPosY(), goalNode);
-        List<Character> goalPath = search.startDFS();
+    public final void DepthFirstSearch() 
+    {
+        List<Character> goalPath = _search.startDFS();
 
         System.out.println(goalPath.toString());
         ui.Schritte.setText("Auszufuehrende Schritte" + goalPath.toString());
