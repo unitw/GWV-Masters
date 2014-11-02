@@ -37,6 +37,7 @@ public class Start {
 
     public Start() {
         // DeepFirstSearch();
+        BreadthFirstSearch();
     }
 
     /**
@@ -109,4 +110,8 @@ public class Start {
 
     }
 
+    
+
+    
+    
 }

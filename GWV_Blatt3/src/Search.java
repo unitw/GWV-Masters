@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -7,8 +6,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
-public class Search
-{
+public class Search {
 
     private final char GOAL_CHAR = 'g';
     private final char START_CHAR = 's';
@@ -23,13 +21,13 @@ public class Search
     private final int _startPosY;
     private final int GOAL_HASH;
 
-    private Set<Path> _frontier;
-    private Queue<Node> _bfsQueue;
-    
+    private final Set<Path> _frontier;
+    private final Queue _bfsQueue;
+
     private int _currentPosX;
     private int _currentPosY;
 
-    private Stack<Character> _searchStack;
+    private final Stack<Character> _searchStack;
 
     /**
      *
@@ -38,8 +36,7 @@ public class Search
      * @param startPosY
      * @return
      */
-    public static List<Character> dfs(char[][] environment, int startPosX, int startPosY)
-    {
+    public static List<Character> dfs(char[][] environment, int startPosX, int startPosY) {
         Search search = new Search(environment, startPosX, startPosY, null);
         return search.startDFS();
     }
@@ -55,15 +52,14 @@ public class Search
      * @param startPosY The X-Coordinate of the start point in the environment
      * array. char[y][x]
      */
-    public Search(char[][] environment, int startPosX, int startPosY, Node goalNode)
-    {
+    public Search(char[][] environment, int startPosX, int startPosY, Node goalNode) {
         _environment = Start.copy2DCharArray(environment);
         _inputEnvironment = Start.copy2DCharArray(environment);
         _startPosX = startPosX;
         _startPosY = startPosY;
         _currentPosX = startPosX;
         _currentPosY = startPosY;
-        
+
         _searchStack = new Stack<Character>();
         _frontier = new HashSet<Path>();
         _bfsQueue = new PriorityQueue<Node>();
@@ -72,15 +68,14 @@ public class Search
 
     /**
      * Takes a direction as a char and returns the opposite direction
+     *
      * @param direction a direction ('u', 'r', 'd', 'l')
      * @return the opposite direction to the specified one
      */
-    private char oppositeDirection(char direction)
-    {
+    private char oppositeDirection(char direction) {
         char oppositeDir = ' ';
 
-        switch (direction)
-        {
+        switch (direction) {
             case 'u':
                 oppositeDir = 'd';
                 break;
@@ -99,46 +94,39 @@ public class Search
     }
 
     /**
-     * Starts a depth first search on the environment that 
-     * was specified during instanciation. 
-     * @return If a path to a goal is found, the path is returned as a List, 
-     *         if not a List containing only 's' (Start point) is returned.
-     *         The path is specified as a series of actions 
-     *          ('s' = go to start point, 'u' = move up, 'd' = move down, 
-     *           'l' = move left and 'r' = move right)
+     * Starts a depth first search on the environment that was specified during
+     * instanciation.
+     *
+     * @return If a path to a goal is found, the path is returned as a List, if
+     * not a List containing only 's' (Start point) is returned. The path is
+     * specified as a series of actions ('s' = go to start point, 'u' = move up,
+     * 'd' = move down, 'l' = move left and 'r' = move right)
      */
-    public List<Character> startDFS()
-    {
+    public List<Character> startDFS() {
         reset(); // Resets all values to the start values, needed if multiple searches are performed
-        
+
         _searchStack.push(START_CHAR);
 
         int schleifenzaehler = 0;
 
-        while (!goalInReach() && !_searchStack.isEmpty())
-        {
-            if (topIsClear())
-            {
+        while (!goalInReach() && !_searchStack.isEmpty()) {
+            if (topIsClear()) {
                 move(UP);
                 _environment[_currentPosY][_currentPosX] = UP;
                 _searchStack.push(UP);
-            } else if (rightIsClear())
-            {
+            } else if (rightIsClear()) {
                 move(RIGHT);
                 _environment[_currentPosY][_currentPosX] = RIGHT;
                 _searchStack.push(RIGHT);
-            } else if (bottomIsClear())
-            {
+            } else if (bottomIsClear()) {
                 move(DOWN);
                 _environment[_currentPosY][_currentPosX] = DOWN;
                 _searchStack.push(DOWN);
-            } else if (leftIsClear())
-            {
+            } else if (leftIsClear()) {
                 move(LEFT);
                 _environment[_currentPosY][_currentPosX] = LEFT;
                 _searchStack.push(LEFT);
-            } else
-            {
+            } else {
                 //char topChar = _searchStack.peek();
                 char topChar = _searchStack.pop();
                 move(oppositeDirection(topChar));
@@ -146,11 +134,9 @@ public class Search
             ++schleifenzaehler;
             //System.out.println(_searchStack.toString());
 
-            for (int y = 0; y < 10; ++y)
-            {
+            for (int y = 0; y < 10; ++y) {
                 String line = "";
-                for (int x = 0; x < 20; ++x)
-                {
+                for (int x = 0; x < 20; ++x) {
                     line = line + _environment[y][x];
                 }
                 System.out.println(line);
@@ -159,99 +145,91 @@ public class Search
         }
 
         System.out.println(schleifenzaehler);
-        
+
         return new ArrayList(_searchStack);
     }
 
-    public List<Character> startBFS()
-    {
+    public List<Character> startBFS() {
         Node startNode = new Node(_startPosX, _startPosY, START_CHAR);
-        
+
         _bfsQueue.add(startNode);
         _frontier.add(new Path(startNode));
-        
-        while (!_frontier.isEmpty())
-        {
-            Node currentNode = _bfsQueue.poll();
+
+        while (!_frontier.isEmpty()) {
+            Node currentNode = (Node) _bfsQueue.poll();
             Path currentPath = null;
             // Choosing the path that ends with the first element on the queue
-            for (Path path:_frontier)
-            {
-                if (currentNode.equals(path.getLastNode()))
-                {
+            for (Path path : _frontier) {
+                if (currentNode.equals(path.getLastNode())) {
                     currentPath = path;
                     break;
                 }
             }
-            
-            if (isGoalNode(currentNode))
-            {
+
+            if (isGoalNode(currentNode)) {
                 return currentPath.getCharPath();
             }
-            
+
             _frontier.remove(currentPath);
             moveTo(currentNode);
-            
+
             // Check wether currentNode has any neighbours
             // If a neighbour is found a new Path is added to frontier
-            if (topIsClearOrGoal())
-            {
+            if (topIsClearOrGoal()) {
                 move(UP);
                 _environment[_currentPosY][_currentPosX] = UP;
-                
+
                 Node neighbour = new Node(_currentPosX, _currentPosY, UP);
                 Path newPath = currentPath.expandPath(neighbour);
                 _frontier.add(newPath);
-                
+                _bfsQueue.add(neighbour);
                 move(oppositeDirection(UP));
             }
-            if (rightIsClearOrGoal())
-            {
+            if (rightIsClearOrGoal()) {
                 move(RIGHT);
                 _environment[_currentPosY][_currentPosX] = RIGHT;
-                
+
                 Node neighbour = new Node(_currentPosX, _currentPosY, RIGHT);
                 Path newPath = currentPath.expandPath(neighbour);
                 _frontier.add(newPath);
-                
+
                 move(oppositeDirection(RIGHT));
+                _bfsQueue.add(neighbour);
             }
-            if (bottomIsClearOrGoal())
-            {
+            if (bottomIsClearOrGoal()) {
                 move(DOWN);
                 _environment[_currentPosY][_currentPosX] = DOWN;
-                
+
                 Node neighbour = new Node(_currentPosX, _currentPosY, DOWN);
                 Path newPath = currentPath.expandPath(neighbour);
                 _frontier.add(newPath);
-                
+                _bfsQueue.add(neighbour);
                 move(oppositeDirection(DOWN));
             }
-            if (leftIsClearOrGoal())
-            {
+            if (leftIsClearOrGoal()) {
                 move(LEFT);
                 _environment[_currentPosY][_currentPosX] = LEFT;
-                
+
                 Node neighbour = new Node(_currentPosX, _currentPosY, LEFT);
                 Path newPath = currentPath.expandPath(neighbour);
                 _frontier.add(newPath);
-                
+                _bfsQueue.add(neighbour);
                 move(oppositeDirection(LEFT));
             }
-            
+            printEnvironment();
+
         }
         return new ArrayList<Character>();
     }
-    
+
     /**
-     * Changes the values of currentPosX or currentPosY to move 
-     * in the specified diretion
-     * @param direction 
+     * Changes the values of currentPosX or currentPosY to move in the specified
+     * diretion
+     *
+     * @param direction
      */
-    private void move(char direction)
-    {
-        switch (direction)
-        {
+    private void move(char direction) {
+        switch (direction) {
             case UP:
                 _currentPosY -= 1;
                 break;
@@ -266,114 +244,101 @@ public class Search
                 break;
         }
     }
-    
-    private void moveTo(Node position)
-    {
+
+    private void moveTo(Node position) {
         _currentPosX = position.getX();
         _currentPosY = position.getY();
     }
-    
-    
-    private boolean topIsClearOrGoal()
-    {
+
+    public void printEnvironment() {
+        for (int y = 0; y < 10; ++y) {
+            String line = "";
+            for (int x = 0; x < 20; ++x) {
+                line = line + _environment[y][x];
+            }
+            System.out.println(line);
+        }
+        System.out.println();
+    }
+
+    private boolean topIsClearOrGoal() {
         return topIsClear() || _environment[_currentPosY - 1][_currentPosX] == GOAL_CHAR;
     }
 
-    private boolean bottomIsClearOrGoal()
-    {
+    private boolean bottomIsClearOrGoal() {
         return bottomIsClear() || _environment[_currentPosY + 1][_currentPosX] == GOAL_CHAR;
     }
 
-    private boolean leftIsClearOrGoal()
-    {
+    private boolean leftIsClearOrGoal() {
         return leftIsClear() || _environment[_currentPosY][_currentPosX - 1] == GOAL_CHAR;
     }
 
-    private boolean rightIsClearOrGoal()
-    {
+    private boolean rightIsClearOrGoal() {
         return rightIsClear() || _environment[_currentPosY][_currentPosX + 1] == GOAL_CHAR;
     }
-    
+
     // ----Clear-Methods: ----
     //These methods check wether position next to the current 
     //position are clear and have not been visited during search yet.
-    private boolean topIsClear()
-    {
+    private boolean topIsClear() {
         return _environment[_currentPosY - 1][_currentPosX] == ' ';
     }
 
-    private boolean bottomIsClear()
-    {
+    private boolean bottomIsClear() {
         return _environment[_currentPosY + 1][_currentPosX] == ' ';
     }
 
-    private boolean leftIsClear()
-    {
+    private boolean leftIsClear() {
         return _environment[_currentPosY][_currentPosX - 1] == ' ';
     }
 
-    private boolean rightIsClear()
-    {
+    private boolean rightIsClear() {
         return _environment[_currentPosY][_currentPosX + 1] == ' ';
     }
 
     // ---- Goal Checking: ----
     // These Methods check wether a goal is in next to the current postion,
     // if 
-    private boolean goalInReach()
-    {
-        if (topIsGoal())
-        {
+    private boolean goalInReach() {
+        if (topIsGoal()) {
             _searchStack.push(UP);
-        } else if (rightIsGoal())
-        {
+        } else if (rightIsGoal()) {
             _searchStack.push(RIGHT);
-        } else if (bottomIsGoal())
-        {
+        } else if (bottomIsGoal()) {
             _searchStack.push(DOWN);
-        } else if (leftIsGoal())
-        {
+        } else if (leftIsGoal()) {
             _searchStack.push(LEFT);
-        } else
-        {
+        } else {
             return false;
         }
 
         return true;
     }
 
-    private boolean topIsGoal()
-    {
+    private boolean topIsGoal() {
         return _environment[_currentPosY - 1][_currentPosX] == GOAL_CHAR;
     }
 
-    private boolean bottomIsGoal()
-    {
+    private boolean bottomIsGoal() {
         return _environment[_currentPosY + 1][_currentPosX] == GOAL_CHAR;
     }
 
-    private boolean leftIsGoal()
-    {
+    private boolean leftIsGoal() {
         return _environment[_currentPosY][_currentPosX - 1] == GOAL_CHAR;
     }
 
-    private boolean rightIsGoal()
-    {
+    private boolean rightIsGoal() {
         return _environment[_currentPosY][_currentPosX + 1] == GOAL_CHAR;
     }
-    
-    private boolean isGoalNode(Node currentNode)
-    {
+
+    private boolean isGoalNode(Node currentNode) {
         return currentNode.hashCode() == GOAL_HASH;
     }
-    
-    private void reset()
-    {
+
+    private void reset() {
         _environment = Start.copy2DCharArray(_inputEnvironment);
         _searchStack.removeAllElements();
         _currentPosX = _startPosX;
         _currentPosY = _startPosY;
     }
 }
-
-

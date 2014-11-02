@@ -2,13 +2,11 @@
 
 public class Main {
 
-   static UI ui = new UI();
+   static Start start= null;
 
     public static void main(String[] args) {
       
-        ui = new UI();
-        ui.initCmps();
-       
+      start= new Start();
     }
 
 }

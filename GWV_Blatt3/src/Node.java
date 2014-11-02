@@ -1,4 +1,4 @@
-public class Node {
+public class Node implements Comparable  {
 
     private final int x;
 
@@ -8,7 +8,7 @@ public class Node {
     public Node(int x, int y, char Direction) {
 
         this.x = x;
-        this.y = x;
+        this.y = y;
         this.Direction = Direction;
 
     }
@@ -54,5 +54,11 @@ public class Node {
     	}
     	return true;
 	}
+
+    @Override
+    public int compareTo(Object o) {
+        
+        return 123;
+      }
     
 }
