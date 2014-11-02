@@ -30,18 +30,6 @@ public class Search {
     private final Stack<Character> _searchStack;
 
     /**
-     *
-     * @param environment
-     * @param startPosX
-     * @param startPosY
-     * @return
-     */
-    public static List<Character> dfs(char[][] environment, int startPosX, int startPosY) {
-        Search search = new Search(environment, startPosX, startPosY, null);
-        return search.startDFS();
-    }
-
-    /**
      * Creates a new Search instance that can search for a goal in a given
      * environment
      *
@@ -297,7 +285,7 @@ public class Search {
     }
 
     // ----Clear-Methods: ----
-    //These methods check wether position next to the current 
+    //These methods check wether  positions next to the current 
     //position are clear and have not been visited during search yet.
     private boolean topIsClear() {
         return _environment[_currentPosY - 1][_currentPosX] == ' ';
