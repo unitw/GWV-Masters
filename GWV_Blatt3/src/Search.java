@@ -252,6 +252,12 @@ public class Search {
         }
     }
 
+    /**
+     * Changes the values of currentPosX or currentPosY to move to position
+     * specified in the Node that gets passed to the method
+     * 
+     * @param position The Node containing the information where to move
+     */
     private void moveTo(Node position) {
         _currentPosX = position.getX();
         _currentPosY = position.getY();
@@ -305,7 +311,9 @@ public class Search {
 
     // ---- Goal Checking: ----
     // These Methods check wether a goal is in next to the current postion,
-    // if 
+    // if it is the direction to move to, to get to the goal gets added to the 
+    // _searchStack and true is returned
+    
     private boolean goalInReach() {
         if (topIsGoal()) {
             _searchStack.push(UP);
