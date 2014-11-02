@@ -30,18 +30,6 @@ public class Search {
     private final Stack<Character> _searchStack;
 
     /**
-     *
-     * @param environment
-     * @param startPosX
-     * @param startPosY
-     * @return
-     */
-    public static List<Character> dfs(char[][] environment, int startPosX, int startPosY) {
-        Search search = new Search(environment, startPosX, startPosY, null);
-        return search.startDFS();
-    }
-
-    /**
      * Creates a new Search instance that can search for a goal in a given
      * environment
      *
@@ -132,16 +120,10 @@ public class Search {
                 char topChar = _searchStack.pop();
                 move(oppositeDirection(topChar));
             }
+            
+            // Output to the console
             ++schleifenzaehler;
-
-            for (int y = 0; y < 10; ++y) {
-                String line = "";
-                for (int x = 0; x < 20; ++x) {
-                    line = line + _environment[y][x];
-                }
-                System.out.println(line);
-            }
-            System.out.println();
+            printEnvironment();
         }
 
         System.out.println(schleifenzaehler);
@@ -226,8 +208,9 @@ public class Search {
                 
                 move(oppositeDirection(LEFT));
             }
-            printEnvironment();
             
+            // Output to the console
+            printEnvironment();
             ++schleifenZaehler;
 
         }
@@ -269,6 +252,12 @@ public class Search {
         }
     }
 
+    /**
+     * Changes the values of currentPosX or currentPosY to move to position
+     * specified in the Node that gets passed to the method
+     * 
+     * @param position The Node containing the information where to move
+     */
     private void moveTo(Node position) {
         _currentPosX = position.getX();
         _currentPosY = position.getY();
@@ -302,7 +291,7 @@ public class Search {
     }
 
     // ----Clear-Methods: ----
-    //These methods check wether position next to the current 
+    //These methods check wether  positions next to the current 
     //position are clear and have not been visited during search yet.
     private boolean topIsClear() {
         return _environment[_currentPosY - 1][_currentPosX] == ' ';
@@ -322,7 +311,9 @@ public class Search {
 
     // ---- Goal Checking: ----
     // These Methods check wether a goal is in next to the current postion,
-    // if 
+    // if it is the direction to move to, to get to the goal gets added to the 
+    // _searchStack and true is returned
+    
     private boolean goalInReach() {
         if (topIsGoal()) {
             _searchStack.push(UP);
