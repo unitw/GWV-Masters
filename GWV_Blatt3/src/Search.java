@@ -195,9 +195,8 @@ public class Search {
                 _environment[_currentPosY][_currentPosX] = UP;
 
                 Node neighbour = new Node(_currentPosX, _currentPosY, UP);
-                Path newPath = currentPath.expandPath(neighbour);
-                _frontier.add(newPath);
-                _bfsQueue.add(neighbour);
+                bfsAddNewPathToFrontier(currentPath, neighbour);
+                
                 move(oppositeDirection(UP));
             }
             if (rightIsClearOrGoal()) {
@@ -205,20 +204,17 @@ public class Search {
                 _environment[_currentPosY][_currentPosX] = RIGHT;
 
                 Node neighbour = new Node(_currentPosX, _currentPosY, RIGHT);
-                Path newPath = currentPath.expandPath(neighbour);
-                _frontier.add(newPath);
+                bfsAddNewPathToFrontier(currentPath, neighbour);
 
                 move(oppositeDirection(RIGHT));
-                _bfsQueue.add(neighbour);
             }
             if (bottomIsClearOrGoal()) {
                 move(DOWN);
                 _environment[_currentPosY][_currentPosX] = DOWN;
 
                 Node neighbour = new Node(_currentPosX, _currentPosY, DOWN);
-                Path newPath = currentPath.expandPath(neighbour);
-                _frontier.add(newPath);
-                _bfsQueue.add(neighbour);
+                bfsAddNewPathToFrontier(currentPath, neighbour);
+                
                 move(oppositeDirection(DOWN));
             }
             if (leftIsClearOrGoal()) {
@@ -226,9 +222,8 @@ public class Search {
                 _environment[_currentPosY][_currentPosX] = LEFT;
 
                 Node neighbour = new Node(_currentPosX, _currentPosY, LEFT);
-                Path newPath = currentPath.expandPath(neighbour);
-                _frontier.add(newPath);
-                _bfsQueue.add(neighbour);
+                bfsAddNewPathToFrontier(currentPath, neighbour);
+                
                 move(oppositeDirection(LEFT));
             }
             printEnvironment();
@@ -242,8 +237,13 @@ public class Search {
         return new ArrayList<Character>();
     }
 
-    
-    
+    private void bfsAddNewPathToFrontier(Path currentPath, Node neighbour)
+    {
+        Path newPath = currentPath.expandPath(neighbour);
+        _frontier.add(newPath);
+        _bfsQueue.add(neighbour);
+    }
+
     
     
     /**
