@@ -132,16 +132,10 @@ public class Search {
                 char topChar = _searchStack.pop();
                 move(oppositeDirection(topChar));
             }
+            
+            // Output to the console
             ++schleifenzaehler;
-
-            for (int y = 0; y < 10; ++y) {
-                String line = "";
-                for (int x = 0; x < 20; ++x) {
-                    line = line + _environment[y][x];
-                }
-                System.out.println(line);
-            }
-            System.out.println();
+            printEnvironment();
         }
 
         System.out.println(schleifenzaehler);
@@ -226,8 +220,9 @@ public class Search {
                 
                 move(oppositeDirection(LEFT));
             }
-            printEnvironment();
             
+            // Output to the console
+            printEnvironment();
             ++schleifenZaehler;
 
         }
