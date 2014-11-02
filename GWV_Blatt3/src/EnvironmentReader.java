@@ -120,7 +120,7 @@ public class EnvironmentReader
      */
     public int getGoalPosX()
     {
-        return _startPos[1];
+        return _goalPos[1];
     }
 
     /**
@@ -129,7 +129,7 @@ public class EnvironmentReader
      */
     public int getGoalPosY()
     {
-        return _startPos[0];
+        return _goalPos[0];
     }
     
     public char getGoalChar()

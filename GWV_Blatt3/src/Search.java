@@ -19,7 +19,7 @@ public class Search {
     private char[][] _environment;
     private final int _startPosX;
     private final int _startPosY;
-    private final int GOAL_HASH;
+    private final Node GOAL_NODE;
 
     private final Set<Path> _frontier;
     private final Queue _bfsQueue;
@@ -63,7 +63,7 @@ public class Search {
         _searchStack = new Stack<Character>();
         _frontier = new HashSet<Path>();
         _bfsQueue = new PriorityQueue<Node>();
-        GOAL_HASH = goalNode.hashCode();
+        GOAL_NODE = goalNode;
     }
 
     /**
@@ -332,7 +332,8 @@ public class Search {
     }
 
     private boolean isGoalNode(Node currentNode) {
-        return currentNode.hashCode() == GOAL_HASH;
+        return currentNode.getX() == GOAL_NODE.getX() 
+            && currentNode.getY() == GOAL_NODE.getY();
     }
 
     private void reset() {
