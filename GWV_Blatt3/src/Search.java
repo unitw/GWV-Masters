@@ -150,6 +150,8 @@ public class Search {
     }
 
     public List<Character> startBFS() {
+        int schleifenZaehler = 0;
+        
         Node startNode = new Node(_startPosX, _startPosY, START_CHAR);
 
         _bfsQueue.add(startNode);
@@ -217,8 +219,12 @@ public class Search {
                 move(oppositeDirection(LEFT));
             }
             printEnvironment();
+            ++schleifenZaehler;
 
         }
+        System.out.println(schleifenZaehler);
+        reset();
+        
         return new ArrayList<Character>();
     }
 
