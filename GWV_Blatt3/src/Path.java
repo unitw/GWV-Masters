@@ -38,18 +38,16 @@ public class Path {
         return charList;
     }
 
+    /**
+     * Returns a new path that gets extended by the specified node
+     * @param newNode the node to extend the path
+     * @return extended path
+     */
     public Path expandPath(Node newNode) {
-
-       
             Path newPath = new Path();
             newPath.nodelist.addAll(this.nodelist);
             
-            
             newPath.addNode(newNode);
-            return newPath;
-        
+            return newPath;    
     }
-
-   
-
 }

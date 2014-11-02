@@ -97,10 +97,12 @@ public class Search {
      * Starts a depth first search on the environment that was specified during
      * instanciation.
      *
-     * @return If a path to a goal is found, the path is returned as a List, if
-     * not a List containing only 's' (Start point) is returned. The path is
+     * @return If a path to a goal is found, the path is returned as a List, 
+     * if not an empty List is returned. The path is
      * specified as a series of actions ('s' = go to start point, 'u' = move up,
      * 'd' = move down, 'l' = move left and 'r' = move right)
+     * The actions correspond to the environment, 
+     * not the direction the robot is currently facing
      */
     public List<Character> startDFS() {
         reset(); // Resets all values to the start values, needed if multiple searches are performed
@@ -149,6 +151,17 @@ public class Search {
         return new ArrayList(_searchStack);
     }
 
+    /**
+     * Starts a breadth first search on the environment that was specified during
+     * instanciation.
+     *
+     * @return If a path to a goal is found, the path is returned as a List, 
+     * if not an empty List is returned. The path is
+     * specified as a series of actions ('s' = go to start point, 'u' = move up,
+     * 'd' = move down, 'l' = move left and 'r' = move right)
+     * The actions correspond to the environment, 
+     * not the direction the robot is currently facing
+     */
     public List<Character> startBFS() {
         int schleifenZaehler = 0;
         
@@ -169,6 +182,8 @@ public class Search {
             }
 
             if (isGoalNode(currentNode)) {
+                System.out.println(schleifenZaehler);
+                reset();
                 return currentPath.getCharPath();
             }
 
