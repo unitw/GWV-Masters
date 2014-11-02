@@ -74,7 +74,7 @@ public class UI extends JFrame {
 
                     @Override
                     public void run() {
-                        start.BreadthFirstSearch(0);
+                        start.BreadthFirstSearch(1);
                     }
                 });
             }
@@ -134,7 +134,7 @@ public class UI extends JFrame {
         frame.getContentPane().add(scroller, BorderLayout.PAGE_START);
 
 //        panel.add(scroller);
-        gbc.insets = new Insets(10,10,20,10);
+        gbc.insets = new Insets(10,10,10,10);
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
